@@ -33,31 +33,31 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class InlineShardingStrategyTest {
-    
+
     private InlineShardingStrategy shardingStrategy;
-    
+
     @Before
     public void setUp() {
         InlineShardingStrategyConfiguration shardingStrategyConfig = new InlineShardingStrategyConfiguration("order_id", "t_order_${order_id % 4}");
         shardingStrategy = new InlineShardingStrategy(shardingStrategyConfig);
     }
-    
+
     @Test
     public void assertDoSharding() {
         List<String> availableTargetNames = Lists.newArrayList("t_order_0", "t_order_1", "t_order_2", "t_order_3");
         List<RouteValue> shardingValues = Lists.newArrayList(new ListRouteValue<>("order_id", "t_order", Lists.newArrayList(0, 1, 2, 3)));
-        Collection<String> actual = shardingStrategy.doSharding(availableTargetNames, shardingValues, new ConfigurationProperties(new Properties()));
+        Collection<String> actual = shardingStrategy.doSharding(null, availableTargetNames, shardingValues, new ConfigurationProperties(new Properties()));
         assertThat(actual.size(), is(4));
     }
-    
+
     @Test
     public void assertDoShardingWithNonExistNodes() {
         List<String> availableTargetNames = Lists.newArrayList("t_order_0", "t_order_1");
         List<RouteValue> shardingValues = Lists.newArrayList(new ListRouteValue<>("order_id", "t_order", Lists.newArrayList(0, 1, 2, 3)));
-        Collection<String> actual = shardingStrategy.doSharding(availableTargetNames, shardingValues, new ConfigurationProperties(new Properties()));
+        Collection<String> actual = shardingStrategy.doSharding(null, availableTargetNames, shardingValues, new ConfigurationProperties(new Properties()));
         assertThat(actual.size(), is(2));
     }
-    
+
     @Test
     public void assertGetShardingColumns() {
         assertThat(shardingStrategy.getShardingColumns().size(), is(1));

@@ -33,14 +33,15 @@ public interface ShardingStrategy {
      * @return sharding columns
      */
     Collection<String> getShardingColumns();
-    
+
     /**
      * Sharding.
      *
+     * @param sqlStatementClassName sqlStatementClassName
      * @param availableTargetNames available data sources or tables's names
      * @param shardingValues sharding values
      * @param properties ShardingSphere properties
      * @return sharding results for data sources or tables's names
      */
-    Collection<String> doSharding(Collection<String> availableTargetNames, Collection<RouteValue> shardingValues, ConfigurationProperties properties);
+    Collection<String> doSharding(String sqlStatementClassName, Collection<String> availableTargetNames, Collection<RouteValue> shardingValues, ConfigurationProperties properties);
 }

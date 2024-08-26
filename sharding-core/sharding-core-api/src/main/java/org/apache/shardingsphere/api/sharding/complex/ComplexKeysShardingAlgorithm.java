@@ -30,10 +30,11 @@ public interface ComplexKeysShardingAlgorithm<T extends Comparable<?>> extends S
     
     /**
      * Sharding.
-     * 
+     *
+     * @param  sqlStatementClassName sqlStatementClassName
      * @param availableTargetNames available data sources or tables's names
      * @param shardingValue sharding value
      * @return sharding results for data sources or tables's names
      */
-    Collection<String> doSharding(Collection<String> availableTargetNames, ComplexKeysShardingValue<T> shardingValue);
+    Collection<String> doSharding(String sqlStatementClassName, Collection<String> availableTargetNames, ComplexKeysShardingValue<T> shardingValue);
 }

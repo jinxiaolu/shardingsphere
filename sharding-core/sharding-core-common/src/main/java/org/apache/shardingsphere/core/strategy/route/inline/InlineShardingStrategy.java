@@ -33,8 +33,9 @@ import org.apache.shardingsphere.underlying.common.config.properties.Configurati
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.TreeSet;
+import java.util.List;
+
 
 /**
  * Standard sharding strategy.
@@ -54,7 +55,12 @@ public final class InlineShardingStrategy implements ShardingStrategy {
     }
     
     @Override
-    public Collection<String> doSharding(final Collection<String> availableTargetNames, final Collection<RouteValue> shardingValues, final ConfigurationProperties properties) {
+    public Collection<String> doSharding(
+            final String sqlStatementClassName,
+            final Collection<String> availableTargetNames,
+            final Collection<RouteValue> shardingValues,
+            final ConfigurationProperties properties
+    ) {
         RouteValue shardingValue = shardingValues.iterator().next();
         if (properties.<Boolean>getValue(ConfigurationPropertyKey.ALLOW_RANGE_QUERY_WITH_INLINE_SHARDING) && shardingValue instanceof RangeRouteValue) {
             return availableTargetNames;
@@ -69,7 +75,7 @@ public final class InlineShardingStrategy implements ShardingStrategy {
         }
         return result;
     }
-    
+
     private Collection<String> doSharding(final ListRouteValue shardingValue) {
         Collection<String> result = new LinkedList<>();
         for (PreciseShardingValue<?> each : transferToPreciseShardingValues(shardingValue)) {

@@ -34,7 +34,12 @@ public final class NoneShardingStrategy implements ShardingStrategy {
     private final Collection<String> shardingColumns = Collections.emptyList();
     
     @Override
-    public Collection<String> doSharding(final Collection<String> availableTargetNames, final Collection<RouteValue> shardingValues, final ConfigurationProperties properties) {
+    public Collection<String> doSharding(
+            final String sqlStatementClassName,
+            final Collection<String> availableTargetNames,
+            final Collection<RouteValue> shardingValues,
+            final ConfigurationProperties properties
+    ) {
         return availableTargetNames;
     }
 }

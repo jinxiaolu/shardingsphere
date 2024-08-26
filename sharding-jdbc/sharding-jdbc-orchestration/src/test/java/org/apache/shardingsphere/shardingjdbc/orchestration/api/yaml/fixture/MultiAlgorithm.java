@@ -25,7 +25,11 @@ import java.util.Collection;
 public final class MultiAlgorithm implements ComplexKeysShardingAlgorithm<String> {
     
     @Override
-    public Collection<String> doSharding(final Collection<String> availableTargetNames, final ComplexKeysShardingValue<String> shardingValue) {
+    public Collection<String> doSharding(
+            final String sqlStatementClassName,
+            final Collection<String> availableTargetNames,
+            final ComplexKeysShardingValue<String> shardingValue
+    ) {
         return null;
     }
 }
